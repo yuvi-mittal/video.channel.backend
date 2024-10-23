@@ -1,6 +1,6 @@
 import dotenv from "dotenv"
 import mongoose from "mongoose";
-//import {DB_NAME} from "./constants.js"
+import {DB_NAME} from "./constants.js"
 import {app} from './app.js'
 import connectDB from "./db/index.js"
 dotenv.config({
@@ -25,7 +25,8 @@ import express from "express"
 
 const app= express()
 
-(async () =>{
+// ifee
+;(async () =>{
     try {
        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)  //Uses Mongoose to connect to a MongoDB database.
        app.on("error", () =>{
@@ -38,7 +39,7 @@ const app= express()
        })
     } catch (error) {
         console.error("error :" , error)
-        throw err
+        throw error
     }
 })()
 */
