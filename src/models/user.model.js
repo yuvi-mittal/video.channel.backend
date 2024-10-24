@@ -64,7 +64,7 @@ const userSchema = new Schema(
     userSchema.methods.isPasswordCorrect = async function(password){
         return await bcrypt.compare(password, this.password)
     }
-//Generates a JWT access token containing the user's basic info (_id, email, username, fullName).
+//Generates a JWT access token containing the user's basic info (_id, email, username, fullName). sth we trust
     userSchema.methods.generateAccessToken = function(){
         return jwt.sign(   //sign is a method
             {

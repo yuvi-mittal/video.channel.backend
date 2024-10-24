@@ -1,3 +1,7 @@
+
+
+// reusable code for response from api ... everytime we dont have to write pattern of apiresponse 
+
 class ApiResponse {
     constructor(statusCode, data, message = "Success"){
         this.statusCode = statusCode

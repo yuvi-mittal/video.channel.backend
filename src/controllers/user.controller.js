@@ -63,19 +63,6 @@ const registerUser = asyncHandeler(async(req,res) => {
     return res.status(201).json(
         new ApiResponse(200, createdUser, "User registered Successfully")
     )
-
-
-
-
-
-
-
-
-
-
-
-
-
     // res.status(200).json({
     //     message: "ok"
     // })
