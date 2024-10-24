@@ -60,13 +60,13 @@ const userSchema = new Schema(
         next()
     })
 
-    //checks password with the one in database 
+    //checks password with the one in database , this is a custom method
     userSchema.methods.isPasswordCorrect = async function(password){
         return await bcrypt.compare(password, this.password)
     }
 //Generates a JWT access token containing the user's basic info (_id, email, username, fullName).
     userSchema.methods.generateAccessToken = function(){
-        return jwt.sign(
+        return jwt.sign(   //sign is a method
             {
                 _id: this._id,
                 email: this.email,
@@ -79,6 +79,7 @@ const userSchema = new Schema(
             }
         )
     }
+    
     userSchema.methods.generateRefreshToken = function(){
         return jwt.sign(
             {
