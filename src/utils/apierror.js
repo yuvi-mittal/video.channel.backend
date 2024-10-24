@@ -3,8 +3,8 @@ class ApiError extends Error {
         statusCode ,
         message = "something went wrong",
         errors= [],
-        stack =""
-    ){
+        stack =""  //A report that shows where in the code the error happened, helpful for developers when debugging.
+    ){ 
         super(message)
         this.statusCode = statusCode
         this.data = null
