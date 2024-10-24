@@ -11,7 +11,7 @@ const userSchema = new Schema(
             unique: true,
             lowercase: true,
             trim: true, 
-            index: true,
+            index: true,  // searcing field enhance
             isActive: Boolean
         },
         email: {
@@ -40,7 +40,7 @@ const userSchema = new Schema(
                 ref: "Video"
             }
         ],
-        password: {
+        password: {    
             type: String,
             required: [true, 'Password is required']
         },
@@ -53,17 +53,18 @@ const userSchema = new Schema(
     }
     )
 
-    userSchema.pre("save", async function (next) {
-        if(!this.isModified("password")) return next();
+    userSchema.pre("save", async function (next) {  //pre is hook, data "save " se pehle.... next (ye flag aage pass kardo)
+        if(!this.isModified("password")) return next();  // should run only when passwordis modified 
     
         this.password = await bcrypt.hash(this.password, 10) //password encryption
         next()
     })
 
+    //checks password with the one in database 
     userSchema.methods.isPasswordCorrect = async function(password){
         return await bcrypt.compare(password, this.password)
     }
-
+//Generates a JWT access token containing the user's basic info (_id, email, username, fullName).
     userSchema.methods.generateAccessToken = function(){
         return jwt.sign(
             {
