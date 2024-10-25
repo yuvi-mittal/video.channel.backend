@@ -6,6 +6,8 @@ import { ApiResponse } from "../utils/apirespone.js";
 
 
 const registerUser = asyncHandeler(async(req,res) => {
+
+    
     const {fullName, email, username, password } = req.body
     console.log("email: ", email);
 

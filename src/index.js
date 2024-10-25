@@ -20,26 +20,3 @@ connectDB()
 
 
 
-/*
-import express from "express"
-
-const app= express()
-
-// ifee
-;(async () =>{
-    try {
-       await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)  //Uses Mongoose to connect to a MongoDB database.
-       app.on("error", () =>{
-        console.log("error :" , error)
-        throw error
-       })
-
-       app.listen(process.env.PORT, () =>{
-        console.log(`app listening on port ${process.env.PORT}` );
-       })
-    } catch (error) {
-        console.error("error :" , error)
-        throw error
-    }
-})()
-*/

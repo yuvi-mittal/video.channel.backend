@@ -20,6 +20,29 @@ import userRouter from './route/user.route.js'
 
 
 app.use("/api/v1/users", userRouter)
+
+
+export {app}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //app.use("/api/v1/healthcheck", healthcheckRouter)
 // app.use("/api/v1/tweets", tweetRouter)
 // app.use("/api/v1/subscriptions", subscriptionRouter)
@@ -29,4 +52,3 @@ app.use("/api/v1/users", userRouter)
 // app.use("/api/v1/playlist", playlistRouter)
 // app.use("/api/v1/dashboard", dashboardRouter)
 
-export {app}
