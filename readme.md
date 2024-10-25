@@ -1,1 +1,1 @@
-# backend project for video channel, production grade 
+this is a backend of videotube
