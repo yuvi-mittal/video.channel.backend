@@ -22,7 +22,7 @@ try {
     }
     
     req.user = user;
-    next()
+    next()  //pass control to the next handler if verification succeeds.
 } catch (error) {
     throw new ApiError(401, error?.message || "invalid")
 }

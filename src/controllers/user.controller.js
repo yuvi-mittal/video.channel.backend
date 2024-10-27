@@ -21,6 +21,7 @@ const generateAccessTokenRefreshToken = async(userId)=> {
         throw new ApiError(500, " ")
     }
 }
+
 const registerUser = asyncHandeler(async (req, res) => {
     // get user details from frontend
     // validation - not empty
@@ -217,13 +218,77 @@ const logOutUser = asyncHandeler(async(req , res ) => {
   }
 })
 
+const changeCurrentPassword = asyncHandeler(async(req, res) =>{
+
+    const {oldPassword , newPassword} = req.body
+
+   const user = await User.findById(req.user?._id)
+
+  const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
+
+if(!isPasswordCorrect){
+    throw new ApiError(401, "invalid old password")
+}
+
+    user.password= newPassword
+   await user.save({validateBeforeSave: false })
+
+   return res 
+   .status(200)
+   .json(new ApiResponse(200, {} , "password changed successfully "))
+
+})
+
+const getCurrentUser = asyncHandeler(async(req, res)=>{
+
+    return res
+    .status(200)
+    .json(200, req.user, "current user fetched successfully")
+})
+
+const updateAccountDetails= asyncHandeler(async(req, res) =>{
 
 
+    const {fullName, email} = req.body
+
+    if(!fullName || !email){
+        throw new ApiError(401, "all fields are req")
+    }
+
+   const user =  User.findByIdAndUpdate(req.user?._id,
+    {
+        $set:{
+            fullName,
+            email
+        }
+    },
+    {new: true}
+    ).select("-password")  //excluding the password field from the returned user object
+    
+    return res
+    .status(200)
+    .json(new ApiResponse(200 , user , "account details updated successfully"))
+})
+
+// const updateAvatar = asyncHandeler(async(req, res) =>{
+
+//    const avatarLocalPath = req.file?.path
+
+//    if(!avatarLocalPath){
+//     throw new ApiError(401, "file not found")
+//    }
+
+
+// })
 
 
 export {
     registerUser,
     loginUser,
     logOutUser,
-    refreshAccessToken
+    refreshAccessToken,
+    changeCurrentPassword,
+    getCurrentUser,
+    updateAccountDetails,
+    
 } 
