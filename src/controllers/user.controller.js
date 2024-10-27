@@ -50,7 +50,7 @@ const registerUser = asyncHandeler(async (req, res) => {
     if (existedUser) {
         throw new ApiError(409, "User with email or username already exists")
     }
-    console.log(req.files);
+   // console.log(req.files);
 
     const avatarLocalPath = req.files?.avatar[0]?.path;
     //const coverImageLocalPath = req.files?.coverImage[0]?.path;
@@ -59,7 +59,7 @@ const registerUser = asyncHandeler(async (req, res) => {
     if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
         coverImageLocalPath = req.files.coverImage[0].path
     }
-    console.log(coverImageLocalPath)
+   // console.log(avatarLocalPath)
 
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is required")
@@ -111,7 +111,7 @@ const loginUser = asyncHandeler(async(req , res) =>{
         throw new ApiError(400 , "username or email is required ")
     }
 
-    const user = await User.findOne({    // these methods are fom mongoose 
+    const user = await User.findOne({    // these methods are for mongoose 
         $or : [{username} ,{email}]   //either username or email in mongodb 
     }) 
 
@@ -127,7 +127,7 @@ const loginUser = asyncHandeler(async(req , res) =>{
 
     const {accessToken, refreshToken} = await generateAccessTokenRefreshToken(user._id)
 
-   const loggedInUser =  User.findById(user._id).select("-password -refreshToken")
+   const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
    const options ={
     httpOnly : true,
@@ -159,15 +159,11 @@ const logOutUser = asyncHandeler(async(req , res ) => {
         {
             new: true
         }
-           
-        
     )
     const options ={
         httpOnly : true,
         secure : true
        }
-
-      
     return res
     .status(200)
     .clearCookie("accessToken", options)
@@ -183,7 +179,7 @@ const logOutUser = asyncHandeler(async(req , res ) => {
         throw new ApiError(401, "unauthorised request")
     }
 
-  try {
+     try {
       const decodedToken = jwt.verify(
           incomingRefreshToken,
           process.env.REFRESH_TOKEN_SECRET
