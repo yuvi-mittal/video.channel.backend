@@ -281,6 +281,10 @@ const updateAccountDetails= asyncHandeler(async(req, res) =>{
 
 // })
 
+// const updateImage = asyncHandeler(async(req, res) =>{
+
+// })
+
 
 export {
     registerUser,
